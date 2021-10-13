@@ -1,0 +1,6 @@
+server:
+    port: 8080
+
+api:
+    seoul:
+        baseUrl: http://openAPI.seoul.go.kr:8088/
