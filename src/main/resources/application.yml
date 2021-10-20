@@ -4,3 +4,5 @@ server:
 api:
     seoul:
         baseUrl: http://openAPI.seoul.go.kr:8088/
+    busan:
+        baseUrl: http://apis.data.go.kr/6260000/
