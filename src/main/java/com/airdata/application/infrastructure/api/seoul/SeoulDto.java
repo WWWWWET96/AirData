@@ -1,4 +1,4 @@
-package com.airdata.seoul;
+package com.airdata.application.infrastructure.api.seoul;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -26,7 +26,7 @@ public class SeoulDto {
             @JsonProperty("RESULT")
             private Header header;
             @JsonProperty("row")
-            private List<Row> row;
+            private List<Row> rows;
 
             public boolean isSuccess() {
                 if (Objects.equals(header.code, "INFO-000")) {
@@ -59,9 +59,9 @@ public class SeoulDto {
             @JsonProperty("MSRSTE_NM")
             private String town;
             @JsonProperty("PM10")
-            private Double pm10;
+            private Integer pm10;
             @JsonProperty("PM25")
-            private Double pm25;
+            private Integer pm25;
             @JsonProperty("O3")
             private Double o3;
             @JsonProperty("NO2")

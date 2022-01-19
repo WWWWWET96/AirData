@@ -1,4 +1,4 @@
-package com.airdata.busan;
+package com.airdata.application.infrastructure.api.busan;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

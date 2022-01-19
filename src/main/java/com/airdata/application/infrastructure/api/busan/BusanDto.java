@@ -1,4 +1,4 @@
-package com.airdata.busan;
+package com.airdata.application.infrastructure.api.busan;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

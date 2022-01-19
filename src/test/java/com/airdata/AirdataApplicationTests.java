@@ -1,9 +1,7 @@
 package com.airdata;
 
 
-import com.airdata.busan.BusanCaller;
-import com.airdata.busan.BusanDto;
-import com.airdata.seoul.SeoulCaller;
+import com.airdata.application.infrastructure.api.seoul.SeoulCaller;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

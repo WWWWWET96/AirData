@@ -1,4 +1,4 @@
-package com.airdata.seoul;
+package com.airdata.application.infrastructure.api.seoul;
 
 
 import retrofit2.Call;

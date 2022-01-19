@@ -1,14 +1,17 @@
-package com.airdata.seoul;
+package com.airdata.application.infrastructure.api.seoul;
 
+import com.airdata.application.AirQualityGrade;
+import com.airdata.application.interfaces.api.dto.AirQualityDto;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -35,7 +38,7 @@ public class SeoulCaller {
 
     }
 
-    public SeoulDto.GetSeoulData getAirData(){
+    public AirQualityDto.GetAirQualityInfo getAirData(){
         try{
             var call = seoulApi.getAirData("20211011");
             var response = call.execute().body();
@@ -48,7 +51,7 @@ public class SeoulCaller {
             if(response.getResponse().isSuccess()) { // true 제대로 응답됐으면
                 log.info("제대로 연결됐습니다.");
                 log.info(response.toString());
-                return response;
+                return convert(response);
             }
 
             throw new RuntimeException("응답이 올바르지 않습니다.");//그 외 경우
@@ -61,6 +64,42 @@ public class SeoulCaller {
         }
     }
 
+    private AirQualityDto.GetAirQualityInfo convert(SeoulDto.GetSeoulData response) {
+        var rows = response.getResponse().getRows();
+        var sidoPm10Avg = averagePm10(rows);
+        var sidoPm10AvgGrade = AirQualityGrade.getPm10Grade(sidoPm10Avg);
+        var guList = convert(rows);
+
+        return AirQualityDto.GetAirQualityInfo.builder()
+                .currentDate("20220117")
+                .sido("seoul")
+                .sidoPm10Avg(sidoPm10Avg)
+                .sidoPm10AvgGrade(sidoPm10AvgGrade)
+                .guList(guList)
+                .totalCount(guList.size())
+                .build();
+    }
+
+    private List<AirQualityDto.GuAirQualityInfo> convert(List<SeoulDto.Row> rows){
+        return rows.stream()
+                .map(row -> new AirQualityDto.GuAirQualityInfo(
+                        row.getSite(),
+                        row.getPm10(),
+                        row.getPm25(),
+                        row.getO3(),
+                        row.getNo2(),
+                        row.getCo(),
+                        row.getSo2())
+
+                )
+                .collect(Collectors.toList());
+    }
+    private Double averagePm10(List<SeoulDto.Row> rows){
+        return rows.stream()
+                .mapToInt(SeoulDto.Row::getPm10)
+                .average()
+                .orElse(Double.NaN);
+    }
 
 
 }

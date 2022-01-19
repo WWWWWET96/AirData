@@ -1,4 +1,4 @@
-package com.airdata.busan;
+package com.airdata.application.infrastructure.api.busan;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
