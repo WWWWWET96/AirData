@@ -36,7 +36,7 @@ public class BusanCaller {
                 throw new RuntimeException("응답값 없음");
             }
             if(response.getResponse().isSuccess()){
-                log.info("연결성공");
+               
                 log.info(response.toString());
                 return response;
             }
